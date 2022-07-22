@@ -11,7 +11,12 @@ API.interceptors.request.use( (req) => {
 
 export const fetchPost = (id) => API.get(`/posts/${id}`);
 export const fetchPosts = (page) => API.get(`/posts?page=${page}`);
-export const fetchPostsBySearch = (searchQuery) => API.get(`/posts/search?searchQuery=${searchQuery.search || 'none'}&tags=${searchQuery.tags || 'none'}`);
+export const fetchPostsBySearch = (searchQuery) => {
+    if(searchQuery.search && searchQuery.tags) return API.get(`/posts/search?searchQuery=${searchQuery.search}&tags=${searchQuery.tags}`);
+    else if(searchQuery.search && !searchQuery.tags) return API.get(`/posts/search?searchQuery=${searchQuery.search}`);
+    else if(!searchQuery.search && searchQuery.tags) return API.get(`/posts/search?${searchQuery.search}tags=${searchQuery.tags}`);
+    else if(!searchQuery.search && !searchQuery.tags) return API.get(`/posts/search`);
+};
 export const createPost = (newPost) => API.post('/posts', newPost);
 export const updatePost = (id, updatedPost) => API.patch(`posts/${id}`, updatedPost);
 export const deletePost = (id) => API.delete(`posts/${id}`);

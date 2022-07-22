@@ -11,8 +11,9 @@ export default (state = {isLoading: true, posts: []}, action) => {
             currentPage: action.payload.currentPage,
             numberOfPages: action.payload.numberOfPages};//add whole action.payload into redux
         case FETCH_BY_SEARCH:
+            console.log('reducer', action.payload);
             return {...state,
-                posts: action.payload};
+                posts: action.payload.data};
         case FETCH_POST:
             return { ...state, post: action.payload};
 

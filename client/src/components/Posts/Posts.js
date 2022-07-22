@@ -9,7 +9,7 @@ const Posts = ({setCurrentId}) => {
   const classes = useStyles();
   console.log(posts);
 
-  if(!posts.length && !isLoading) return 'No posts';
+  if(!posts?.length && !isLoading) return 'No posts';
 
   return (
       isLoading?  <CircularProgress /> : (

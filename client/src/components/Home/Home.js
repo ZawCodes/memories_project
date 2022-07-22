@@ -37,7 +37,11 @@ const Home = () => {
     const searchPost = () => {
       if(search.trim() || tags) {
         dispatch(getPostsBySearch({search, tags: tags.join(',')}));
-        history.push(`/posts/search?searchQuery=${search || 'none'}&tags=${tags.join(',')}`);
+        // history.push(`/posts/search?searchQuery=${search || 'none'}&tags=${tags.join(',')}`);
+        if(search && tags.join(',')) history.push(`/posts/search?searchQuery=${search}&tags=${tags.join(',')}`);
+        else if(search && !tags.join(',')) history.push(`/posts/search?searchQuery=${search}`);
+        else if(!search && tags.join(',')) history.push(`/posts/search?${search}tags=${tags.join(',')}`);
+        else if(!search && !tags.join(',')) history.push(`/posts/search`);
       }
       else {
         history.push('/'); //navigate in new version
