@@ -1,5 +1,6 @@
 import * as api from '../api';
 import { COMMENT, FETCH_POST, START_LOADING, END_LOADING, FETCH_BY_SEARCH, FETCH_ALL, CREATE, UPDATE, DELETE, LIKE } from '../constants/actionTypes';
+
 // Action Creators
 export const getPost = (id) => async (dispatch) => {
     try {
@@ -61,6 +62,7 @@ export const deletePost = (id) => async (dispatch) => {
     try {
         await api.deletePost(id);
         dispatch({type: DELETE, payload: id})
+
     } catch (error) {
         console.log(error.message);
     }

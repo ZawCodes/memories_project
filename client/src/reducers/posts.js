@@ -31,7 +31,7 @@ export default (state = {isLoading: true, posts: []}, action) => {
                 return post;
             })}
         case DELETE:
-            return { ...state, posts: state.filter((post)=> post._id !== action.payload)};
+            return { ...state, posts: state.posts.filter((post)=> post._id !== action.payload)};
         default:
             return state;
     }
