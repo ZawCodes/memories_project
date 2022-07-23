@@ -1,4 +1,4 @@
-import { AUTH } from '../constants/actionTypes';
+import { GOOGLE_AUTH, AUTH } from '../constants/actionTypes';
 import * as api from '../api/index.js';
 
 export const signin = (formData, history) => async (dispatch) => {
@@ -8,6 +8,18 @@ export const signin = (formData, history) => async (dispatch) => {
         dispatch({type:AUTH, data})
         
         history.push('/');
+    } catch (error) {
+        
+    }
+}
+
+export const googleSignin = (token, history) => async (dispatch) => {
+    try {
+        const {data} = await api.googleSignin(token);
+
+        dispatch({type:GOOGLE_AUTH, data});
+        history.push('/');
+        
     } catch (error) {
         
     }

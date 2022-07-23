@@ -1,8 +1,11 @@
-import { AUTH, LOGOUT } from '../constants/actionTypes';
+import { GOOGLE_AUTH, AUTH, LOGOUT } from '../constants/actionTypes';
 
 const authReducer = (state = {authData: null}, action) => {
     switch (action.type) {
         case AUTH:
+            localStorage.setItem('profile', JSON.stringify({...action?.data}));
+            return {...state, authData: action?.data};
+        case GOOGLE_AUTH:
             localStorage.setItem('profile', JSON.stringify({...action?.data}));
             return {...state, authData: action?.data};
         case LOGOUT:

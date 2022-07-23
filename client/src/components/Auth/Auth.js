@@ -4,14 +4,14 @@ import useStyles from './styles';
 import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import Input from './Input';
 import Icon from './icon';
-import { GoogleLogin, googleLogout } from '@react-oauth/google'
+// import { GoogleLogin, googleLogout } from '@react-oauth/google'
 import jwt_decode from 'jwt-decode';
 import {useDispatch} from 'react-redux'
 import { useHistory } from 'react-router-dom';
-import {signin, signup} from '../../actions/auth';
+import {signin, signup, googleSignin} from '../../actions/auth';
 
 
-// import { useGoogleLogin } from '@react-oauth/google';
+import { useGoogleLogin } from '@react-oauth/google';
 const initialState = {firstName: '', lastName: '', email: '', password: '', confirmPassword: ''}
 const Auth = () => {
     const [showPassword, setShowPassword] = useState(false)
@@ -37,27 +37,30 @@ const Auth = () => {
         setIsSignup((prev) => !prev)
         setShowPassword(false);
     }
-    const googleSuccess = async (res) => {
-        console.log(res);
-        console.log('decoded', jwt_decode(res.credential));
-        const decoded = jwt_decode(res.credential);
-        const result = {name: decoded.name, picture: decoded.picture, email: decoded.email};
-        const token = decoded.sub;
+    // const googleSuccess = async (res) => {
+    //     console.log(res);
+    //     console.log('decoded', jwt_decode(res.credential));
+    //     const decoded = jwt_decode(res.credential);
+    //     const result = {name: decoded.name, picture: decoded.picture, email: decoded.email};
+    //     const token = decoded.sub;
 
-        try {
-            dispatch({type: 'AUTH', data: {result, token}});
-            history.push('/');
-        } catch (error) {
-            console.log(error);
-        }
-    }
-    const googleFailure = (error) => {
-        console.log("Google Sign In was unsuccessful. Try Again Later", error);
-    }
+    //     try {
+    //         dispatch({type: 'AUTH', data: {result, token}});
+    //         history.push('/');
+    //     } catch (error) {
+    //         console.log(error);
+    //     }
+    // }
+    // const googleFailure = (error) => {
+    //     console.log("Google Sign In was unsuccessful. Try Again Later", error);
+    // }
 
-    // const login = useGoogleLogin({
-    // onSuccess: tokenResponse => console.log('success',tokenResponse),
-    // });
+    const login = useGoogleLogin({
+    onSuccess: tokenResponse => {
+        console.log('success',tokenResponse)
+        dispatch(googleSignin(tokenResponse.access_token, history));
+    }
+    });
     const handleShowPassword = () => setShowPassword((prevShowPassword) => !prevShowPassword);
 
     return (
@@ -86,13 +89,13 @@ const Auth = () => {
                     <Button type="submit" fullWidth variant="contained" color="primary" className={classes.submit} >
                         {isSignup ? 'Sign Up' : 'Sign In'}
                     </Button>
-                    {/* <Button className={classes.googleButton} color="primary" fullWidth onClick={login} startIcon={<Icon />} variant="contained">
+                    <Button className={classes.googleButton} color="primary" fullWidth onClick={login} startIcon={<Icon />} variant="contained">
                             Google Sign In
-                        </Button> */}
-                    <GoogleLogin
+                        </Button>
+                    {/* <GoogleLogin
                         onSuccess={googleSuccess}
                         onError={googleFailure}
-                    />
+                    /> */}
                     <Grid container justifyContent='flex-end'>
                         <Grid item>
                             <Button onClick={switchMode}>
