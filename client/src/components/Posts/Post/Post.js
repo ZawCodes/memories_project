@@ -58,6 +58,7 @@ const Post = ({post, setCurrentId}) => {
         <Typography variant="h6">{post.name}</Typography>
         <Typography variant="body2">{moment(post.createdAt).fromNow()}</Typography>
       </div>
+      </div>
       {(user?.token === post?.creator || user?.result?._id === post?.creator) && (
             <div className={classes.overlay2}>
           <Button style={{color: 'white'}} size="small" onClick={() => setCurrentId(post._id)}>
@@ -72,7 +73,6 @@ const Post = ({post, setCurrentId}) => {
       <CardContent>
               <Typography variant="body2" color="textSecondary" component="p">{post.message}</Typography>
       </CardContent>
-      </div>
       <CardActions className={classes.cardActions}>
         <Button size="small" color="primary" disabled={!user?.result} onClick={handleLike}>
           <Likes />
