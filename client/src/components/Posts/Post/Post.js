@@ -13,7 +13,7 @@ import { useHistory } from 'react-router-dom';
 const Post = ({post, setCurrentId}) => {
     const user = JSON.parse(localStorage.getItem('profile'));
     const [likes, setLikes] = useState(post?.likes);
-    const userId = user?.token || user?.result?._id;
+    const userId = user?.result?._id;
     const hasLikedPost = post.likes.find((like) => like === userId);
     const handleLike = async () => {
         dispatch(likePost(post._id));
@@ -36,7 +36,7 @@ const Post = ({post, setCurrentId}) => {
     const Likes = () => {
       if(likes.length > 0) {
         
-        return likes.find((like) => (like === user?.token) || (like === user?.result?._id))
+        return likes.find((like) => like === userId)
         ?(
           <><ThumbUpAltIcon fontSize="small" />&nbsp;{likes.length > 2 ? `You and ${likes.length -1 } others`:`${likes.length} like${likes.length >1?'s':''}`}</>
         ):(
@@ -52,7 +52,7 @@ const Post = ({post, setCurrentId}) => {
     
   return (
     <Card className={classes.card} raised elevation={6}>
-      <div className={classes.cardAction} onClick={openPost}>
+      <div style={{cursor: 'pointer'}} className={classes.cardAction} onClick={openPost}>
       <CardMedia className={classes.media} image={post.selectedFile} title={post.title}/>
       <div className={classes.overlay}>
         <Typography variant="h6">{post.name}</Typography>

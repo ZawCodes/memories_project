@@ -50,7 +50,7 @@ const Home = () => {
   return (
     <Grow in>
     <Container maxWidth="xl">
-        <Grid className={classes.gridContainer} container justifyContent="space-between" alignItems="stretch" spacing={3}>
+        <Grid style={{padding: '40px 0'}} className={classes.gridContainer} container justifyContent="space-between" alignItems="stretch" spacing={3}>
             <Grid item xs={12} sm={6} md={9}>
                 <Posts setCurrentId={setCurrentId}/>
             </Grid>
@@ -70,7 +70,7 @@ const Home = () => {
               </AppBar>
                 <Form currentId={currentId} setCurrentId={setCurrentId}/>
                 {(!searchQuery && !tags.length) && (
-                   <Paper elevation={6} >
+                   <Paper style={{padding: '20px 0'}} elevation={6} >
                     <Pagination page={page} className={classes.pagination} />
                 </Paper>
                 )}
