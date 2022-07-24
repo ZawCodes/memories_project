@@ -27,6 +27,12 @@ export default makeStyles((theme) => ({
       marginLeft: 0,
     },
   },
+  textWrap: {
+    width: '250px',
+    whiteSpace: 'nowrap',
+    overflow: 'hidden',
+    textOverflow: 'ellipsis',
+  },
   recommendedPosts: {
     display: 'flex',
     [theme.breakpoints.down('sm')]: {
